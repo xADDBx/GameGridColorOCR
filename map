@@ -1,3 +1,5 @@
+This is just an example of how the grid that is passed to findPath looks like
+
 fig, ax = plt.subplots(figsize=(10, 10))
 min_val, max_val = 0, 20
 maxnum = 2

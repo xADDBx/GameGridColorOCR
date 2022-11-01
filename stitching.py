@@ -1,6 +1,7 @@
 import cv2
 
 
+# Python stitching; not used anymore
 def stitch(dirPath, outFile):
     images = []
     for i in range(1, 5):

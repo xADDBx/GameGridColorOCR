@@ -1,8 +1,9 @@
 from PIL import Image, ImageChops
-from ColorOCR import rgb_to_color
+import ColorOCR
 import numpy as np
 
 
+# Tries to remove black borders etc. before Color OCR
 def trim(img):
     bg = Image.new(img.mode, img.size, img.getpixel((0, 0)))
     diff = ImageChops.difference(img, bg)
@@ -12,6 +13,7 @@ def trim(img):
         return img.crop(bbox)
 
 
+# This is for the debug image in which every sampled point will have a large dot showing it's recognized color
 def color(point, img, color):
     x, y = point
     for i in range(-2, 3):
@@ -20,7 +22,12 @@ def color(point, img, color):
             img.putpixel((x + i, y + j), htr(color))
 
 
+# Assuming the grid is 20x20 with all those fields, this function basically goes through every cells and samples 2
+# points; one at the upper left to classify elements, one a bit lower left of the center to recognize if it's a mountain
+# The recognized Element/Mountain will then be saved in the Grid
 def check_grid(x, y, img):
+    # This was used to manually select sampled points; found that using percentage based pixels lead to more
+    # consistent results
     # def click_event(event, x, y, flags, params):
     # x //= 10
     # y //= 10
@@ -36,16 +43,17 @@ def check_grid(x, y, img):
             tmp_y = int(y + j * dy)
             tx = int(tmp_x + 0.01 * img.size[0])
             ty = int(tmp_y + 0.03 * img.size[1])
-            c = rgb_to_color(img.getpixel((tmp_x, tmp_y)))
+            c = ColorOCR.rgb_to_color(img.getpixel((tmp_x, tmp_y)))
+            # Debugging I think
             # pts[img.getpixel((tmp_x, tmp_y))] = img.getpixel((tmp_x, tmp_y))
-            t = rgb_to_color(img.getpixel((tx, ty)))
+            t = ColorOCR.rgb_to_color(img.getpixel((tx, ty)))
             if t == 't':
                 colors.append(t)
             else:
                 colors.append(c)
-            colorst = {'#8d7741': 'y', '#825148': 'o', '#407450': 'g', '#41698a': 'b', '#a95c61': 'r', '#426a38': 't', '#033e4e': 'cyan'}
-            color((tmp_x, tmp_y), img, list(colorst.keys())[list(colorst.values()).index(c)])
-            color((tx, ty), img, list(colorst.keys())[list(colorst.values()).index(t)])
+            # Those two function calls are, as mentioned, two color the debug map
+            color((tmp_x, tmp_y), img, list(ColorOCR.colors.keys())[list(ColorOCR.colors.values()).index(c)])
+            color((tx, ty), img, list(ColorOCR.colors.keys())[list(ColorOCR.colors.values()).index(t)])
         all_colors[j] = colors
 
     img.show()
@@ -71,6 +79,7 @@ def scanGrid(file):
     return check_grid(x_0, y_0, img)
 
 
+# Basically debugging stuff
 ''' Used to calculate average color for better color recognition
 pts = {}
 scanGrid("C:/Users/Christian/Pictures/MyPic.jpg")
