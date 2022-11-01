@@ -1,4 +1,4 @@
-To run this, you need to have a Python3 Interpreter (I'm unsure of which version is needed, but at least 3.6)
+To run this, you need to have a Python3 Interpreter (I'm unsure of which version is needed, but at least 3.6, just use the newest available Python 3 Version if it doesn't run on yours).
 
 Depends on the following packages:
 - OS
@@ -9,7 +9,7 @@ Depends on the following packages:
 - scipy.spatial
 - PIL (Pillow)
 
-be sure to have them installed in your Python3 runtime
+be sure to have them installed in your Python3 runtime.
 
 How to run:
 
