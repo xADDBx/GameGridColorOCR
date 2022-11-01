@@ -8,16 +8,16 @@ import subprocess
 # from stitching import stitch
 
 # Path to Fiji ImageJ installation. Beware that you need the stitches.py script in the scrips subdirectory of Fiji
-ImageJ_path = r"C:/Users/Christian/Desktop/Fiji.app"
+ImageJ_path = "Fiji.app"
 # Directory with the 4 pictures
 # 1.PNG is upper left
 # 2.PNG is upper right
 # 3.PNG is lower left
 # 4.PNG is lower right
 # Example images are included which should show how the final images have to be cropped
-inDir = "C:/Users/Christian/Pictures/Help/"
+inDir = "Help/"
 # Where the resulting path image is saved
-outDir = "C:/Users/Christian/Pictures/Help/"
+outDir = "Help/"
 # Name of resulting Image
 outFile = "MyPic.jpg"
 # Coordinates of Start and Stop,
@@ -34,7 +34,7 @@ choice = ""
 overlap = "55"
 
 # ImageJ stitching
-subprocess.run(f"{ImageJ_path}/ImageJ-win64.exe --ij2 --headless --console --run " +
+subprocess.run(f"{os.path.abspath(ImageJ_path)}/ImageJ-win64.exe --ij2 --headless --console --run " +
                f"\"{ImageJ_path}/scripts/stitches.py\" " +
                f"\"inDir='{inDir}',outDir='{outDir + outFile}',overlap='{overlap}'\"", shell=True)
 # Python Image stitching, disabled as I had more consistent results with ImageJ
