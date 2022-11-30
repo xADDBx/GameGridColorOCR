@@ -74,7 +74,7 @@ if os.path.exists(outDir + "TileConfiguration.txt"):
 
 uniqueName = str(uuid.uuid4())
 os.mkdir(outDir + uniqueName)
-file_names = os.listdir(outDir)
+file_names = [file for file in os.listdir(outDir) if os.path.isfile(os.path.join(outDir, file))]
 
 for file_name in file_names:
     shutil.move(os.path.join(outDir, file_name), outDir + uniqueName)
