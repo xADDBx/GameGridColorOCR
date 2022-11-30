@@ -1,3 +1,6 @@
+import shutil
+import uuid
+
 import matplotlib.pyplot as plt
 import os
 from numpy import inf
@@ -25,8 +28,8 @@ outFile = "MyPic.jpg"
 # (1, 0), ...
 # ...
 # (x, 0), (x, 1), ..., (x, y)
-start = (19, 0)
-stop = (0, 19)
+start = (0, 0)
+stop = (19, 19)
 # If you only want to check one element; leave this empty normally
 choice = ""
 # This is an approximate of the overlap that your images have. The number seems to produce accurate
@@ -68,6 +71,10 @@ if os.path.exists(outDir + "TileConfiguration.registered.txt"):
     os.remove(outDir + "TileConfiguration.registered.txt")
 if os.path.exists(outDir + "TileConfiguration.txt"):
     os.remove(outDir + "TileConfiguration.txt")
-# This deletes the output File. I never needed it so instead of deleting it every time I added this
-''' if os.path.exists(outDir + outFile):
-    os.remove(outDir + outFile) '''
+
+uniqueName = str(uuid.uuid4())
+os.mkdir(outDir + uniqueName)
+file_names = os.listdir(outDir)
+
+for file_name in file_names:
+    shutil.move(os.path.join(outDir, file_name), outDir + uniqueName)

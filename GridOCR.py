@@ -51,7 +51,7 @@ def check_grid(x, y, img):
                 colors.append(t)
             else:
                 colors.append(c)
-            # Those two function calls are, as mentioned, two color the debug map
+            # Those two function calls are, as mentioned, to color the debug map
             color((tmp_x, tmp_y), img, list(ColorOCR.colors.keys())[list(ColorOCR.colors.values()).index(c)])
             color((tx, ty), img, list(ColorOCR.colors.keys())[list(ColorOCR.colors.values()).index(t)])
         all_colors[j] = colors
